@@ -34,7 +34,7 @@ export class EditprofilePage implements OnInit{
   }
 
    async onAcept(){
-    if(this.nombre != this.nuevonombre){
+    if(this.nombre != this.nuevonombre && this.nuevonombre != ''){
 
       this.nombre = this.nuevonombre
 
@@ -58,15 +58,16 @@ export class EditprofilePage implements OnInit{
        await loading.dismiss();
         this.router.navigate(['/tabs/tab1'], navigationExtras);
       }, 2_000)
-
-
     }
     else{
-
-      this.presentAlert("El nombre de usuario ya esta en uso")
-
+      if(this.nuevonombre == ''){
+        this.presentAlert("No puede dejar el campo vacio")
+      }else{
+        this.presentAlert("El nombre de usuario ya esta en uso")
+      }
     }
   }
+  
   async presentAlert(msj:string) {
     const alert = await this.alertController.create({
       header: 'ERROR',

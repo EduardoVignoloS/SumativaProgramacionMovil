@@ -9,7 +9,7 @@ import { AlertController, LoadingController} from '@ionic/angular';
   standalone: false
 })
 export class LoginPage {
-  nombre!: string;
+  nombre: string = 'prueba';
   email: string = '';
   password: string = '';
   emailvalido: string = 'prueba@gmail.com';
