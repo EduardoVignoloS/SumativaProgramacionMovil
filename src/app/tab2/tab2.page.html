@@ -1,0 +1,45 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title class="card-title-text">
+      Metas
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="littie-wrapper">
+    <lottie-player 
+    src="../assets/todolistanimation.json"
+    backgroud ="transparent"
+    speed="1"
+    loop autoplay
+    >
+    </lottie-player>
+  </div>
+  <div>
+    <div class="titulos">Metas Semanales</div>
+    <ion-list>
+      <ion-item>
+        <ion-checkbox labelPlacement="end">Leer un libro</ion-checkbox>
+        <ion-text>+10</ion-text>
+      </ion-item>
+      <ion-item>
+        <ion-checkbox labelPlacement="end">Aprender una habilidad nueva</ion-checkbox>
+        <ion-text>+10</ion-text>
+      </ion-item>
+    </ion-list>
+  </div>
+  <div>
+    <div class="titulos">Metas diarias</div>
+    <ion-list>
+      <ion-item>
+        <ion-checkbox labelPlacement="end">Hacer 1 hora de ejercicio</ion-checkbox>
+        <ion-text>+5</ion-text>
+      </ion-item>
+    </ion-list>
+  </div>
+
+
+
+  <app-explore-container name="Tab 2 page"></app-explore-container>
+</ion-content>

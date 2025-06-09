@@ -1,0 +1,40 @@
+<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+<ion-content>
+  <div class="login-title">
+      <div class="card-title-text" style="color:rgb(0, 154, 154)">Weekly</div>
+  </div>
+
+  <div class="littie-wrapper">
+    <lottie-player 
+    src="../assets/animationlogin.json"
+    backgroud ="transparent"
+    speed="1"
+    loop autoplay
+    >
+    </lottie-player>
+  </div>
+  <div class="login-container">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Accede a tu cuenta</ion-card-title>
+        <ion-card-subtitle>Ingrese sus credenciales</ion-card-subtitle>  
+      </ion-card-header>
+      <ion-card-content>
+        <ion-item>
+          <ion-label position="floating">Email</ion-label>
+          <ion-input type="email" [(ngModel)]="email"></ion-input>
+        </ion-item>
+        <ion-item lines="none" class="spacer"></ion-item>
+        <ion-item>
+          <ion-label position="floating">Contraseña</ion-label>
+          <ion-input type="password" [(ngModel)]="password"></ion-input>
+        </ion-item>
+        <ion-button expand="block" class="login-button" (click)="onLogin()">
+          Iniciar Sesion
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+
+
+  </div>
+</ion-content>

@@ -1,0 +1,35 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title class="card-title-text">
+      Mi Perfil
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="profile-photo">
+    <img src="../assets/profilephotodefault.png" alt="">
+  </div>
+  <div class="profile-information">
+    <ion-list>
+      <ion-item>
+        <ion-label>Nombre</ion-label>
+        <ion-text>{{ nombre }}</ion-text>
+      </ion-item>
+      <ion-item>
+        <ion-label>Correo</ion-label>
+        <ion-text>{{ email }}</ion-text>
+      </ion-item>
+
+      <ion-button expand="block" color="primary" (click)="onEdit()">
+        Editar Perfil
+      </ion-button>
+      <ion-button expand="block" color="danger" (click)="onExit()">
+        Cerrar Sesion
+      </ion-button>
+
+    </ion-list>
+
+  </div>
+  <app-explore-container name="Tab 1 page"></app-explore-container>
+</ion-content>

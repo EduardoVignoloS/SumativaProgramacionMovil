@@ -1,0 +1,47 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title class="card-title-text">
+      Tienda
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="littie-wrapper">
+    <lottie-player 
+    src="../assets/animatedshop.json"
+    backgroud ="transparent"
+    speed="1"
+    loop autoplay
+    >
+    </lottie-player>
+  </div>
+
+  <div>
+    <div class="titulos">Temas</div>
+    <ion-list>
+      <ion-item lines="none">
+        <ion-checkbox labelPlacement="end">Tema verde</ion-checkbox>
+        <ion-text>100</ion-text>
+      </ion-item>
+      <div class="color-example green"></div>
+  
+      <ion-item lines="none">
+        <ion-checkbox labelPlacement="end">Tema azul</ion-checkbox>
+        <ion-text>100</ion-text>
+      </ion-item>
+      <div class="color-example blue"></div>
+    </ion-list>
+  </div>
+  <div>
+    <div class="titulos">De nuestros patrocinadores</div>
+    <ion-list>
+      <ion-item>
+        <ion-checkbox labelPlacement="end">cupón 5% en pepedeportes</ion-checkbox>
+        <ion-text>5000</ion-text>
+      </ion-item>
+    </ion-list>
+  </div>
+
+  <app-explore-container name="Tab 3 page"></app-explore-container>
+</ion-content>
