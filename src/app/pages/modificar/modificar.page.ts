@@ -1,0 +1,16 @@
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+  selector: 'app-modificar',
+  templateUrl: './modificar.page.html',
+  styleUrls: ['./modificar.page.scss'],
+  standalone: false,
+})
+export class ModificarPage implements OnInit {
+
+  constructor() { }
+
+  ngOnInit() {
+  }
+
+}

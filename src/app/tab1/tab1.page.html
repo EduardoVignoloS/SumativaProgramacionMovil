@@ -6,33 +6,41 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <div class="profile-photo">
-    <img src="../assets/profilephotodefault.png" alt="">
+<ion-content [fullscreen]="true" class="ion-padding">
+
+  <div class="profile-photo" style="text-align: center; margin-top: 20px;">
+    <img src="../assets/profilephotodefault.png" alt="Foto de perfil" width="120" height="120" style="border-radius: 50%;">
   </div>
+
   <div class="profile-information">
     <ion-list>
       <ion-item>
         <ion-label>Nombre</ion-label>
         <ion-text>{{ nombre }}</ion-text>
       </ion-item>
+
       <ion-item>
         <ion-label>Correo</ion-label>
-        <ion-text>{{ email }}</ion-text>
+        <ion-text>{{ correo }}</ion-text>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Puntos</ion-label>
+        <ion-text>{{ puntos }}</ion-text>
       </ion-item>
 
       <ion-button expand="block" color="primary" (click)="onEdit()">
         Editar Perfil
       </ion-button>
-      <div class="grafico">
-        <img src="../assets/grafico.png" alt="">
+
+      <div class="grafico" style="text-align: center; margin: 20px 0;">
+        <img src="../assets/grafico.png" alt="Gráfico" width="200">
       </div>
+
       <ion-button expand="block" color="danger" (click)="onExit()">
-        Cerrar Sesion
+        Cerrar Sesión
       </ion-button>
-
     </ion-list>
-
   </div>
-  <app-explore-container name="Tab 1 page"></app-explore-container>
+
 </ion-content>

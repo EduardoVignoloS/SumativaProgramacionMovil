@@ -1,6 +1,7 @@
-import { Component} from '@angular/core';
-import { NavigationExtras, Router } from '@angular/router';
-import { AlertController, LoadingController} from '@ionic/angular';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { AlertController, LoadingController } from '@ionic/angular';
+import { DatabaseService } from '../services/database.service';
 
 @Component({
   selector: 'app-login',
@@ -9,56 +10,54 @@ import { AlertController, LoadingController} from '@ionic/angular';
   standalone: false
 })
 export class LoginPage {
-  nombre: string = 'prueba';
   email: string = '';
   password: string = '';
-  emailvalido: string = 'prueba@gmail.com';
-  passwordvalida: string = 'prueba12345';
 
   constructor(
-    public loadingCtrl: LoadingController,
+    private loadingCtrl: LoadingController,
     private alertController: AlertController,
-    private router: Router
-  ) { }
+    private router: Router,
+    private databaseService: DatabaseService
+  ) {}
 
-  async onLogin(){
-    if(this.email == this.emailvalido && this.password == this.passwordvalida){
-      const loading = await this.loadingCtrl.create({
-        spinner:'crescent',
-        cssClass: 'custom-spinner',
-        backdropDismiss: false,
-      });
-
-      await loading.present();
-
-      let navigationExtras: NavigationExtras ={
-        state : {
-          nombreEnviado: this.nombre,
-          correoEnviado: this.email,
-          contraseñaEnviada: this.password
-        }
-      }
-
-      setTimeout(async()=> {
-       await loading.dismiss();
-        this.router.navigate(['/tabs/tab1'], navigationExtras);
-      }, 2_000)
-
-
+  async onLogin() {
+    if (!this.email || !this.password) {
+      this.presentAlert('Debes completar ambos campos.');
+      return;
     }
-    else{
 
-      this.presentAlert("Usuario y/o Contraseña incorrectos")
+    const loading = await this.loadingCtrl.create({
+      spinner: 'crescent',
+      cssClass: 'custom-spinner',
+      backdropDismiss: false,
+      message: 'Verificando credenciales...'
+    });
 
+    await loading.present();
+
+    const loginExitoso = await this.databaseService.loginUsuario(this.email, this.password);
+
+    await loading.dismiss();
+
+    if (loginExitoso) {
+      const usuario = this.databaseService.getUsuarioActual();
+      console.log('Usuario autenticado: ' + JSON.stringify(usuario));;
+      alert('Bienvenido');
+
+      localStorage.setItem('usuario', JSON.stringify(usuario));
+
+      this.router.navigate(['/tabs/tab1']);
+    } else {
+      this.presentAlert('Correo o contraseña incorrectos.');
     }
   }
-  async presentAlert(msj:string) {
+
+  async presentAlert(mensaje: string) {
     const alert = await this.alertController.create({
-      header: 'ERROR',
-      message: msj,
-      buttons: ['ACEPTAR'],
-    })
+      header: 'Error',
+      message: mensaje,
+      buttons: ['Aceptar']
+    });
     await alert.present();
   }
 }
-
