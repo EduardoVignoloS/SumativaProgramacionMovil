@@ -16,30 +16,31 @@
     >
     </lottie-player>
   </div>
-  <div>
-    <div class="titulos">Metas Semanales</div>
-    <ion-list>
-      <ion-item>
-        <ion-checkbox labelPlacement="end">Leer un libro</ion-checkbox>
-        <ion-text>+10</ion-text>
-      </ion-item>
-      <ion-item>
-        <ion-checkbox labelPlacement="end">Aprender una habilidad nueva</ion-checkbox>
-        <ion-text>+10</ion-text>
-      </ion-item>
-    </ion-list>
-  </div>
-  <div>
-    <div class="titulos">Metas diarias</div>
-    <ion-list>
-      <ion-item>
-        <ion-checkbox labelPlacement="end">Hacer 1 hora de ejercicio</ion-checkbox>
-        <ion-text>+5</ion-text>
-      </ion-item>
-    </ion-list>
-  </div>
 
+  <div class="titulos">Meta Semanal</div>
+  <ion-list *ngIf="metaSemanal">
+    <ion-item>
+      <ion-checkbox 
+        labelPlacement="end"
+        (ionChange)="onTareaChecked(metaSemanal, 10, $event)">
+      </ion-checkbox>
+      <ion-text class="ion-padding-start">{{ metaSemanal.activity }} (+10)</ion-text>
+    </ion-item>
+  </ion-list>
 
+  <div class="titulos">Metas Diarias</div>
+  <ion-list *ngFor="let tarea of metasDiarias">
+    <ion-item>
+      <ion-checkbox 
+        labelPlacement="end"
+        (ionChange)="onTareaChecked(tarea, 5, $event)">
+      </ion-checkbox>
+      <ion-text class="ion-padding-start">{{ tarea.activity }} (+5)</ion-text>
+    </ion-item>
+  </ion-list>
+
+  <div class="titulos">Puntos Totales</div>
+  <ion-text class="ion-padding">{{ puntos }}</ion-text>
 
   <app-explore-container name="Tab 2 page"></app-explore-container>
 </ion-content>

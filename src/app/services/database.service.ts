@@ -8,6 +8,7 @@ import { Usuarios } from './usuarios';
   providedIn: 'root'
 })
 export class DatabaseService {
+
   public database!: SQLiteObject;
   private isDBReady: BehaviorSubject<boolean> = new BehaviorSubject(false);
   
@@ -18,7 +19,8 @@ export class DatabaseService {
       nombre VARCHAR(40) NOT NULL,
       correo VARCHAR(40) NOT NULL,
       password VARCHAR(40) NOT NULL,
-      puntos NUMBER DEFAULT 0
+      puntos NUMBER DEFAULT 0,
+      foto TEXT
     );
   `;
 
@@ -72,6 +74,11 @@ export class DatabaseService {
   async creartablas() {
     try {
       await this.database.executeSql(this.tablaUsuarios, []);
+      try {
+        await this.database.executeSql(`ALTER TABLE usuarios ADD COLUMN foto TEXT;`, []);
+      } catch (e) {
+        console.log('La columna "foto" ya existe o no fue necesaria:' + e);
+      }
       await this.database.executeSql(this.registrarUsuarios, []);
       this.isDBReady.next(true);
     } catch (e) {
@@ -94,7 +101,6 @@ export class DatabaseService {
     }
   }
 
-  // ✅ Método para login: verifica existencia y guarda en localStorage
   async loginUsuario(correo: string, password: string): Promise<boolean> {
     try {
       const res = await this.database.executeSql(
@@ -108,7 +114,8 @@ export class DatabaseService {
           id: user.id_usuario,
           nombre: user.nombre,
           correo: user.correo,
-          puntos: user.puntos
+          puntos: user.puntos,
+          foto: user.foto,
         };
 
         localStorage.setItem('tokenUsuario', JSON.stringify(token));
@@ -122,7 +129,17 @@ export class DatabaseService {
     }
   }
 
-  // ✅ Obtener usuario logueado desde localStorage
+  async actualizarUsuario(id: number, nombre: string, foto: string) {
+    try {
+      return await this.database.executeSql(
+        'UPDATE usuarios SET nombre = ?, foto = ? WHERE id_usuario = ?',
+        [nombre, foto, id]
+      );
+    } catch (e) {
+      this.presentAlert("Error actualizando usuario: " + e);
+    }
+  }
+
   getUsuarioActual(): Usuarios | null {
     const user = localStorage.getItem('tokenUsuario');
     if (user) {
@@ -131,7 +148,6 @@ export class DatabaseService {
     return null;
   }
 
-  // ✅ Cerrar sesión
   logout() {
     localStorage.removeItem('tokenUsuario');
   }

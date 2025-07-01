@@ -13,6 +13,7 @@ export class Tab1Page implements OnInit {
   nombre: string = '';
   correo: string = '';
   puntos: number = 0;
+  foto: string = '../assets/profilephotodefault.png';
 
   constructor(
     private router: Router,
@@ -32,6 +33,7 @@ export class Tab1Page implements OnInit {
         this.nombre = token.nombre;
         this.correo = token.correo;
         this.puntos = token.puntos;
+        this.foto = token.foto || '../assets/profilephotodefault.png';
       } catch (error) {
         console.error('Error parseando tokenUsuario', error);
       }

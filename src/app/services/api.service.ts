@@ -1,9 +1,16 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
-  
-  constructor() { }
+  private url = 'https://bored-api.appbrewery.com/filter?type=recreational';
+
+  constructor(private http: HttpClient) {}
+
+  getTareas(): Observable<any[]> {
+    return this.http.get<any[]>(this.url);
+  }
 }
