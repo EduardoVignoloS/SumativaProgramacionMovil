@@ -20,25 +20,21 @@
   <div class="titulos">Meta Semanal</div>
   <ion-list *ngIf="metaSemanal">
     <ion-item>
-      <ion-checkbox 
-        labelPlacement="end"
-        (ionChange)="onTareaChecked(metaSemanal, 10, $event)">
+      <ion-checkbox labelPlacement="end" (ionChange)="onTareaChecked(metaSemanal, 10, $event)">
       </ion-checkbox>
-      <ion-text class="ion-padding-start">{{ metaSemanal.activity }} (+10)</ion-text>
+      <ion-text class="ion-padding-start">{{ metaSemanal.descripcion }} (+10)</ion-text>
     </ion-item>
   </ion-list>
-
+  
   <div class="titulos">Metas Diarias</div>
   <ion-list *ngFor="let tarea of metasDiarias">
     <ion-item>
-      <ion-checkbox 
-        labelPlacement="end"
-        (ionChange)="onTareaChecked(tarea, 5, $event)">
+      <ion-checkbox labelPlacement="end" (ionChange)="onTareaChecked(tarea, 5, $event)">
       </ion-checkbox>
-      <ion-text class="ion-padding-start">{{ tarea.activity }} (+5)</ion-text>
+      <ion-text class="ion-padding-start">{{ tarea.descripcion }} (+5)</ion-text>
     </ion-item>
   </ion-list>
-
+  
   <div class="titulos">Puntos Totales</div>
   <ion-text class="ion-padding">{{ puntos }}</ion-text>
 

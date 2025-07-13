@@ -10,7 +10,7 @@ import { DatabaseService } from '../services/database.service';
   styleUrls: ['./editprofile.page.scss'],
   standalone: false,
 })
-export class EditProfilePage {
+export class EditprofilePage {
   nombre: string = '';
   imagen: string = '';
 

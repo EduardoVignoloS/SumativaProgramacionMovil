@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiService } from '../services/api.service';
+import { DatabaseService } from '../services/database.service'; // Asegúrate de que este path esté correcto
 
 @Component({
   selector: 'app-tab2',
@@ -12,19 +12,14 @@ export class Tab2Page implements OnInit {
   metasDiarias: any[] = [];
   puntos: number = 0;
 
-  constructor(private api: ApiService) {}
+  constructor(private dbService: DatabaseService) {}
 
   ngOnInit() {
-    this.api.getTareas().subscribe({
-      next: (tareas) => {
-        console.log('Tareas recibidas:', tareas);
-        if (Array.isArray(tareas)) {
-          this.metaSemanal = tareas[0];
-          this.metasDiarias = tareas.slice(1, 3);
-        }
-      },
-      error: (err) => {
-        console.error('Error cargando tareas:', err);
+    this.dbService.dbstate().subscribe(async ready => {
+      if (ready) {
+        const metas = await this.dbService.obtenerMetasAleatorias(4);
+        this.metaSemanal = metas[0];
+        this.metasDiarias = metas.slice(1);
       }
     });
   }

@@ -25,9 +25,34 @@ export class DatabaseService {
   `;
 
   registrarUsuarios: string = `
-    INSERT OR IGNORE INTO usuarios(id_usuario, nombre, correo, password)
-    VALUES (1, 'prueba', 'prueba@gmail.com', 'prueba12345');
+    INSERT OR IGNORE INTO usuarios(id_usuario, nombre, correo, password) VALUES
+      (1, 'prueba', 'prueba@gmail.com', 'prueba12345'),
+      (2, 'usuario1', 'usuario1@gmail.com', 'usuario12345'),
+      (3, 'usuario2', 'usuario2@gmail.com', 'usuario22345'),
+      (4, 'usuario3', 'usuario3@gmail.com', 'usuario32345');
   `;
+
+  // creacion tabla tareas
+
+  tablaMetas: string = `
+    CREATE TABLE IF NOT EXISTS metas (
+      id_meta INTEGER PRIMARY KEY AUTOINCREMENT,
+      descripcion TEXT NOT NULL
+    );
+  `;
+
+  registrarMetas: string[] = [
+    `INSERT INTO metas (descripcion) VALUES ('Leer 10 páginas de un libro');`,
+    `INSERT INTO metas (descripcion) VALUES ('Hacer 30 minutos de ejercicio');`,
+    `INSERT INTO metas (descripcion) VALUES ('Organizar tu escritorio');`,
+    `INSERT INTO metas (descripcion) VALUES ('Aprender una nueva palabra');`,
+    `INSERT INTO metas (descripcion) VALUES ('Limpiar tu correo electrónico');`,
+    `INSERT INTO metas (descripcion) VALUES ('Aprender una nueva habilidad');`,
+    `INSERT INTO metas (descripcion) VALUES ('Tomar 3 litros de agua');`,
+    `INSERT INTO metas (descripcion) VALUES ('Dormir 8 horas');`,
+    `INSERT INTO metas (descripcion) VALUES ('Escribir en tu diario personal');`,
+    `INSERT INTO metas (descripcion) VALUES ('Llamar a un familiar');`
+  ];
 
   listaUsuarios = new BehaviorSubject<Usuarios[]>([]);
 
@@ -74,12 +99,16 @@ export class DatabaseService {
   async creartablas() {
     try {
       await this.database.executeSql(this.tablaUsuarios, []);
+      await this.database.executeSql(this.tablaMetas, []);
       try {
         await this.database.executeSql(`ALTER TABLE usuarios ADD COLUMN foto TEXT;`, []);
       } catch (e) {
         console.log('La columna "foto" ya existe o no fue necesaria:' + e);
       }
       await this.database.executeSql(this.registrarUsuarios, []);
+      for (const sql of this.registrarMetas) {
+        await this.database.executeSql(sql, []);
+      }
       this.isDBReady.next(true);
     } catch (e) {
       this.presentAlert("Error creando tablas: " + e);
@@ -151,4 +180,14 @@ export class DatabaseService {
   logout() {
     localStorage.removeItem('tokenUsuario');
   }
+
+  async obtenerMetasAleatorias(n: number): Promise<any[]> {
+    const res = await this.database.executeSql(`SELECT * FROM metas ORDER BY RANDOM() LIMIT ?`, [n]);
+    let metas: any[] = [];
+    for (let i = 0; i < res.rows.length; i++) {
+      metas.push(res.rows.item(i));
+    }
+    return metas;
+  }
 }
+
